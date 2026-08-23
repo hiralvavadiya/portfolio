@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { nav, profile } from "../data/portfolio";
 
-export default function Navbar() {
+const isMac =
+  typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform ?? navigator.userAgent);
+
+export default function Navbar({ onOpenPalette }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
@@ -70,13 +73,25 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href={profile.resumeUrl}
-          download
-          className="hidden md:inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium text-text hover:border-accent hover:text-accent transition-colors"
-        >
-          Resume
-        </a>
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            type="button"
+            onClick={onOpenPalette}
+            className="inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:border-accent hover:text-accent"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.34-4.34M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+            </svg>
+            <kbd className="text-xs">{isMac ? "⌘" : "Ctrl"}K</kbd>
+          </button>
+          <a
+            href={profile.resumeUrl}
+            download
+            className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium text-text hover:border-accent hover:text-accent transition-colors"
+          >
+            Resume
+          </a>
+        </div>
 
         <button
           type="button"
@@ -114,6 +129,21 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
+            <li className="pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  onOpenPalette();
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-lg border border-border px-3 py-3 text-base font-medium text-muted hover:border-accent hover:text-accent"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.34-4.34M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+                </svg>
+                Quick Search
+              </button>
+            </li>
             <li className="pt-2">
               <a
                 href={profile.resumeUrl}
