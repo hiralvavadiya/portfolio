@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import ArchitectureDiagram from "./ArchitectureDiagram";
+import BookingPlayground from "./BookingPlayground";
 
 export default function CaseStudyModal({ project, onClose }) {
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function CaseStudyModal({ project, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="glow w-full max-w-2xl rounded-2xl border border-border bg-surface p-6 sm:p-8"
+        className="glow w-full max-w-3xl rounded-2xl border border-border bg-surface p-6 sm:p-8"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -72,9 +74,21 @@ export default function CaseStudyModal({ project, onClose }) {
           <p className="text-sm leading-relaxed text-muted">{caseStudy.role}</p>
         </Section>
 
+        {caseStudy.interactive && (
+          <Section title="The availability rule — live">
+            <BookingPlayground />
+          </Section>
+        )}
+
         <Section title="Architecture">
           <BulletList items={caseStudy.architecture} />
         </Section>
+
+        {caseStudy.interactive && (
+          <Section title="Concurrency, step by step">
+            <ArchitectureDiagram />
+          </Section>
+        )}
 
         <Section title="Key Decisions & Challenges">
           <BulletList items={caseStudy.highlights} />

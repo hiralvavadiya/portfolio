@@ -98,6 +98,7 @@ export const projects = [
     note: "Private repository — happy to walk through the code live.",
     status: "In active development",
     caseStudy: {
+      interactive: true,
       summary:
         "A rental-management system for a wedding-outfit business: tracking inventory across cleaning cycles, handling multi-stage bookings (fitting → rental → return), and reconciling deposits and payments per customer — without double-booking an outfit that's still at the dry cleaner.",
       role:

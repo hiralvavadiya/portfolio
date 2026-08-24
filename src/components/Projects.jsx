@@ -1,5 +1,6 @@
 import { projects } from "../data/portfolio";
 import useGsapReveal from "../hooks/useGsapReveal";
+import BookingPlayground from "./BookingPlayground";
 import SectionHeading from "./SectionHeading";
 
 function LinkRow({ project, onOpenCaseStudy }) {
@@ -89,21 +90,27 @@ export default function Projects({ onOpenCaseStudy }) {
                 {featured.description}
               </p>
               <LinkRow project={featured} onOpenCaseStudy={onOpenCaseStudy} />
-            </div>
 
-            <div className="lg:col-span-5 lg:border-l lg:border-border lg:pl-8">
-              <p className="label-mono mb-4 text-faint">Stack</p>
-              <div className="flex flex-wrap gap-2">
-                {featured.tech.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-border-strong px-3 py-1.5 font-mono text-[11px] text-muted"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div className="mt-8">
+                <p className="label-mono mb-4 text-faint">Stack</p>
+                <div className="flex flex-wrap gap-2">
+                  {featured.tech.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-border-strong px-3 py-1.5 font-mono text-[11px] text-muted"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
+
+            {featured.caseStudy?.interactive && (
+              <div className="lg:col-span-5">
+                <BookingPlayground />
+              </div>
+            )}
           </div>
         </article>
 
