@@ -2,17 +2,25 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  --color-bg: #0a0e14;
-  --color-surface: #10151d;
-  --color-surface-2: #161c26;
-  --color-border: #232b38;
-  --color-text: #e6ebf2;
-  --color-muted: #8b96a8;
-  --color-accent: #22d3ee;
-  --color-accent-soft: #22d3ee1a;
-  --color-accent-strong: #67e8f9;
+  /* Warm charcoal base — deliberately not blue-black */
+  --color-bg: #0c0a09;
+  --color-surface: #16120f;
+  --color-surface-2: #1f1a16;
+  --color-border: #2b241f;
+  --color-border-strong: #3d332b;
+
+  --color-text: #f5f0ea;
+  --color-muted: #a1968b;
+  --color-faint: #6b6058;
+
+  /* Ember accent */
+  --color-accent: #ff7a1a;
+  --color-accent-soft: #ff7a1a1f;
+  --color-accent-strong: #ffa057;
+  --color-accent-deep: #c2410c;
 }
 
 html {
@@ -24,11 +32,12 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 ::selection {
   background: var(--color-accent);
-  color: #05070a;
+  color: #17110c;
 }
 
 ::-webkit-scrollbar {
@@ -38,7 +47,7 @@ body {
   background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: var(--color-border-strong);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -49,17 +58,87 @@ body {
   .font-display {
     font-family: var(--font-display);
   }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Oversized editorial headline */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.88;
+  }
+
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, var(--color-accent-strong), var(--color-accent) 55%, var(--color-accent-deep));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Film-grain overlay for depth */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(28px);
     transition:
-      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
   }
   .reveal.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .glow {
+    box-shadow:
+      0 0 0 1px var(--color-border),
+      0 24px 70px -20px rgba(0, 0, 0, 0.8),
+      0 0 60px -30px var(--color-accent);
+  }
+
+  .hover-lift {
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.3s ease,
+      background-color 0.3s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -68,16 +147,14 @@ body {
       transform: none;
       transition: none;
     }
-  }
-
-  .text-gradient {
-    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-strong));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .glow {
-    box-shadow: 0 0 0 1px var(--color-border), 0 12px 40px -12px var(--color-accent-soft);
+    .marquee-track {
+      animation: none;
+    }
+    .hover-lift:hover {
+      transform: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

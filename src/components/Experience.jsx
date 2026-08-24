@@ -1,53 +1,48 @@
 import { experience } from "../data/portfolio";
-import Reveal from "./Reveal";
+import useGsapReveal from "../hooks/useGsapReveal";
 import SectionHeading from "./SectionHeading";
 
 export default function Experience() {
+  const ref = useGsapReveal({ stagger: 0.12 });
+
   return (
-    <section id="experience" className="px-5 py-24 sm:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="experience" ref={ref} className="px-5 py-28 sm:px-8 sm:py-36">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading
+          index="03"
           eyebrow="Experience"
           title="Where I've worked"
           description="2+ years across frontend and full-stack roles, building real-time platforms and client software."
         />
 
-        <div className="relative">
-          <div
-            aria-hidden="true"
-            className="absolute left-[7px] top-2 bottom-2 w-px bg-border sm:left-[9px]"
-          />
+        <ol className="border-t border-border">
+          {experience.map((job) => (
+            <li
+              key={job.company}
+              data-reveal
+              className="group grid gap-6 border-b border-border py-10 transition-colors hover:bg-surface/40 lg:grid-cols-12 lg:gap-8 lg:px-4"
+            >
+              <div className="lg:col-span-3">
+                <p className="label-mono text-accent">{job.period}</p>
+                <p className="label-mono mt-2 text-faint">{job.duration}</p>
+              </div>
 
-          <ol className="space-y-12">
-            {experience.map((job, i) => (
-              <Reveal key={job.company} delay={i * 120} as="li" className="relative pl-8 sm:pl-10">
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-1.5 h-4 w-4 rounded-full border-2 border-accent bg-bg sm:h-5 sm:w-5"
-                />
+              <div className="lg:col-span-9">
+                <h3 className="display-xl text-2xl text-text sm:text-3xl">{job.company}</h3>
+                <p className="mt-2 text-sm font-medium text-accent-strong">{job.role}</p>
 
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <h3 className="font-display text-lg font-semibold text-text">
-                    {job.role} <span className="text-muted">· {job.company}</span>
-                  </h3>
-                  <span className="text-xs font-medium uppercase tracking-wide text-accent">
-                    {job.period}
-                  </span>
-                </div>
-                <p className="mt-1 text-sm text-muted">{job.duration}</p>
-
-                <ul className="mt-4 space-y-2">
+                <ul className="mt-6 space-y-3">
                   {job.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-3 text-sm text-muted sm:text-base">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
+                    <li key={bullet} className="flex gap-4 text-[15px] leading-relaxed text-muted">
+                      <span className="mt-2.5 h-px w-5 shrink-0 bg-border-strong transition-colors group-hover:bg-accent" />
                       <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>
-              </Reveal>
-            ))}
-          </ol>
-        </div>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

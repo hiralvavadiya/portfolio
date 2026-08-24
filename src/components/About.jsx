@@ -1,37 +1,47 @@
 import { about } from "../data/portfolio";
-import Reveal from "./Reveal";
+import useGsapReveal from "../hooks/useGsapReveal";
+import CountUp from "./CountUp";
 import SectionHeading from "./SectionHeading";
 
 const stats = [
-  { value: "2+ yrs", label: "Hands-on experience" },
-  { value: "1 yr", label: "Frontend internship" },
-  { value: "1 yr 2 mos", label: "Full Stack role" },
+  { value: 2, suffix: "+", label: "Years hands-on" },
+  { value: 5, suffix: "", label: "Shipped products" },
+  { value: 1, suffix: "", label: "NASA hackathon award" },
 ];
 
 export default function About() {
+  const ref = useGsapReveal();
+
   return (
-    <section id="about" className="px-5 py-24 sm:px-8">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading eyebrow="About" title="A little about my work" />
+    <section id="about" ref={ref} className="relative px-5 py-28 sm:px-8 sm:py-36">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading index="01" eyebrow="About" title="What I actually do" />
 
-        <div className="grid gap-12 md:grid-cols-5">
-          <Reveal delay={100} className="md:col-span-3">
-            <p className="text-lg leading-relaxed text-muted">{about.paragraph}</p>
-          </Reveal>
+        <div className="grid gap-16 lg:grid-cols-12">
+          <div data-reveal className="lg:col-span-7">
+            <p className="text-xl leading-relaxed text-muted sm:text-2xl">
+              {about.paragraph}
+            </p>
+          </div>
 
-          <Reveal delay={200} className="md:col-span-2">
-            <div className="grid grid-cols-3 gap-4 md:grid-cols-1">
+          <div className="lg:col-span-5 lg:pl-8">
+            <div className="divide-y divide-border border-y border-border">
               {stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl border border-border bg-surface px-5 py-5 text-center md:text-left"
+                  data-reveal
+                  className="flex items-baseline justify-between gap-6 py-6"
                 >
-                  <p className="font-display text-2xl font-semibold text-accent">{stat.value}</p>
-                  <p className="mt-1 text-sm text-muted">{stat.label}</p>
+                  <span className="display-xl text-4xl text-accent sm:text-5xl">
+                    <CountUp value={stat.value} suffix={stat.suffix} />
+                  </span>
+                  <span className="label-mono max-w-[9rem] text-right text-faint">
+                    {stat.label}
+                  </span>
                 </div>
               ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

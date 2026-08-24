@@ -162,7 +162,7 @@ export const education = [
   {
     institution: "Shree Ram Krishna Institute of Computer Education and Applied Science",
     credential: "Bachelor of Science — Computer Science",
-    detail: "Surat, Gujarat · SGPA 8.40",
+    detail: "Sarvajanik College of Engineering & Technology · Surat, Gujarat · SGPA 8.40",
     period: "Jul 2022 — Jul 2025",
   },
   {

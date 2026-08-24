@@ -104,7 +104,7 @@ export default function CommandPalette({ onClose, onOpenCaseStudy }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-black/70 px-4 pt-24 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-start justify-center bg-black/80 px-4 pt-24 backdrop-blur-sm"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -126,7 +126,7 @@ export default function CommandPalette({ onClose, onOpenCaseStudy }) {
             placeholder="Jump to a section, project, or action..."
             className="w-full bg-transparent text-sm text-text outline-none placeholder:text-muted"
           />
-          <kbd className="shrink-0 rounded border border-border px-1.5 py-0.5 text-[10px] font-medium text-muted">
+          <kbd className="shrink-0 rounded border border-border px-1.5 py-0.5 font-mono text-[10px] text-faint">
             Esc
           </kbd>
         </div>
@@ -138,7 +138,7 @@ export default function CommandPalette({ onClose, onOpenCaseStudy }) {
           {filtered.map((cmd, index) => (
             <div key={cmd.id}>
               {cmd.showGroup && (
-                <p className="mt-2 px-3 pb-1 text-[10px] font-semibold uppercase tracking-wide text-muted first:mt-1">
+                <p className="mt-2 px-3 pb-1 label-mono text-faint first:mt-1">
                   {cmd.group}
                 </p>
               )}

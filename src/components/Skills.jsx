@@ -1,36 +1,56 @@
 import { skills } from "../data/portfolio";
-import Reveal from "./Reveal";
+import useGsapReveal from "../hooks/useGsapReveal";
 import SectionHeading from "./SectionHeading";
 
+const marqueeItems = [
+  "React", "Next.js", "TypeScript", "Node.js", "Express", "MongoDB", "PostgreSQL",
+  "NestJS", "WebSockets", "Socket.io", "Tailwind", "Redux", "MUI", "GSAP", "Docker",
+];
+
 export default function Skills() {
+  const ref = useGsapReveal();
+
   return (
-    <section id="skills" className="px-5 py-24 sm:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="skills" className="relative py-28 sm:py-36">
+      {/* Full-bleed marquee */}
+      <div className="relative overflow-hidden border-y border-border py-6">
+        <div className="marquee-track flex w-max gap-10">
+          {[...marqueeItems, ...marqueeItems].map((item, i) => (
+            <span
+              key={`${item}-${i}`}
+              className="display-xl flex shrink-0 items-center gap-10 text-3xl text-faint sm:text-4xl"
+            >
+              {item}
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div ref={ref} className="mx-auto mt-24 max-w-7xl px-5 sm:px-8">
         <SectionHeading
+          index="02"
           eyebrow="Skills"
-          title="Technologies I work with"
-          description="A practical toolkit built over 2 years of shipping full-stack features, from UI to database."
+          title="The toolkit"
+          description="Built over two years of shipping features end-to-end, from schema to interface."
         />
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((group, i) => (
-            <Reveal key={group.category} delay={i * 80}>
-              <div className="h-full rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-accent/50">
-                <h3 className="font-display text-base font-semibold text-text">
-                  {group.category}
-                </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full border border-border bg-surface-2 px-3 py-1 text-xs font-medium text-muted"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map((group) => (
+            <div
+              key={group.category}
+              data-reveal
+              className="group bg-bg p-7 transition-colors hover:bg-surface"
+            >
+              <h3 className="label-mono text-accent">{group.category}</h3>
+              <ul className="mt-5 space-y-2.5">
+                {group.items.map((item) => (
+                  <li key={item} className="text-[15px] text-muted transition-colors group-hover:text-text">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </div>

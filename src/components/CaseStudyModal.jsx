@@ -18,7 +18,7 @@ export default function CaseStudyModal({ project, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-10 backdrop-blur-sm sm:py-16"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/80 px-4 py-10 backdrop-blur-sm sm:py-16"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -30,10 +30,10 @@ export default function CaseStudyModal({ project, onClose }) {
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            <p className="label-mono text-accent">
               Case Study
             </p>
-            <h3 id="case-study-title" className="mt-2 font-display text-xl font-semibold text-text sm:text-2xl">
+            <h3 id="case-study-title" className="mt-2 display-xl text-2xl text-text sm:text-2xl">
               {project.name}
             </h3>
             {project.status && (
@@ -61,7 +61,7 @@ export default function CaseStudyModal({ project, onClose }) {
           {project.tech.map((tag) => (
             <span
               key={tag}
-              className="rounded-full bg-surface-2 px-2.5 py-1 text-[11px] font-medium text-muted"
+              className="rounded-full bg-surface-2 px-2.5 py-1 font-mono text-[11px] text-muted"
             >
               {tag}
             </span>
@@ -118,7 +118,7 @@ export default function CaseStudyModal({ project, onClose }) {
 function Section({ title, children }) {
   return (
     <div className="mt-6">
-      <h4 className="text-xs font-semibold uppercase tracking-wide text-text">{title}</h4>
+      <h4 className="label-mono text-accent">{title}</h4>
       <div className="mt-2.5">{children}</div>
     </div>
   );

@@ -10,29 +10,23 @@ export default function Navbar({ onOpenPalette }) {
   const [active, setActive] = useState("home");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    const sections = nav
-      .map((item) => document.querySelector(item.href))
-      .filter(Boolean);
-
+    const sections = nav.map((item) => document.querySelector(item.href)).filter(Boolean);
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActive(entry.target.id);
-          }
+          if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
     );
-
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
@@ -44,27 +38,29 @@ export default function Navbar({ onOpenPalette }) {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-bg/85 backdrop-blur-md border-b border-border" : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "border-b border-border bg-bg/80 backdrop-blur-xl" : "border-b border-transparent"
       }`}
     >
-      <nav className="max-w-6xl mx-auto flex items-center justify-between px-5 sm:px-8 h-16">
+      <nav className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
         <a
           href="#home"
           onClick={(e) => handleNavClick(e, "#home")}
-          className="font-display font-semibold text-lg tracking-tight text-text"
+          className="display-xl text-xl tracking-tight text-text"
         >
-          Hiral<span className="text-accent">.</span>dev
+          Hiral<span className="text-accent">.</span>
         </a>
 
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden items-center gap-1 md:flex">
           {nav.map((item) => (
             <li key={item.href}>
               <a
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`text-sm font-medium transition-colors hover:text-accent ${
-                  active === item.href.slice(1) ? "text-accent" : "text-muted"
+                className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
+                  active === item.href.slice(1)
+                    ? "bg-surface-2 text-accent"
+                    : "text-muted hover:text-text"
                 }`}
               >
                 {item.label}
@@ -73,23 +69,24 @@ export default function Navbar({ onOpenPalette }) {
           ))}
         </ul>
 
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden items-center gap-2.5 md:flex">
           <button
             type="button"
             onClick={onOpenPalette}
-            className="inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:border-accent hover:text-accent"
+            aria-label="Open command palette"
+            className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-2 text-muted transition-colors hover:border-accent hover:text-accent"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.34-4.34M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
             </svg>
-            <kbd className="text-xs">{isMac ? "⌘" : "Ctrl"}K</kbd>
+            <kbd className="font-mono text-[11px]">{isMac ? "⌘" : "Ctrl"}K</kbd>
           </button>
           <a
             href={profile.resumeUrl}
             download
-            className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium text-text hover:border-accent hover:text-accent transition-colors"
+            className="rounded-full bg-text px-4 py-2 text-sm font-semibold text-bg transition-colors hover:bg-accent"
           >
-            Resume
+            Résumé
           </a>
         </div>
 
@@ -98,62 +95,59 @@ export default function Navbar({ onOpenPalette }) {
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-text md:hidden"
         >
-          <span className="sr-only">Toggle menu</span>
           {open ? (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
           ) : (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 7.5h16.5M3.75 16.5h16.5" />
             </svg>
           )}
         </button>
       </nav>
 
       {open && (
-        <div className="md:hidden border-t border-border bg-bg/95 backdrop-blur-md px-5 pb-6 pt-2">
-          <ul className="flex flex-col gap-1">
-            {nav.map((item) => (
+        <div className="border-t border-border bg-bg/97 px-5 pb-8 pt-4 backdrop-blur-xl md:hidden">
+          <ul className="flex flex-col">
+            {nav.map((item, i) => (
               <li key={item.href}>
                 <a
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className={`block rounded-lg px-3 py-3 text-base font-medium transition-colors ${
-                    active === item.href.slice(1) ? "text-accent bg-surface" : "text-muted hover:text-text"
+                  className={`flex items-baseline gap-4 border-b border-border py-4 transition-colors ${
+                    active === item.href.slice(1) ? "text-accent" : "text-muted"
                   }`}
                 >
-                  {item.label}
+                  <span className="label-mono text-faint">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="display-xl text-2xl">{item.label}</span>
                 </a>
               </li>
             ))}
-            <li className="pt-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  onOpenPalette();
-                }}
-                className="flex w-full items-center justify-center gap-2 rounded-lg border border-border px-3 py-3 text-base font-medium text-muted hover:border-accent hover:text-accent"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.34-4.34M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
-                </svg>
-                Quick Search
-              </button>
-            </li>
-            <li className="pt-2">
-              <a
-                href={profile.resumeUrl}
-                download
-                className="block rounded-lg border border-border px-3 py-3 text-center text-base font-medium text-text hover:border-accent hover:text-accent"
-              >
-                Download Resume
-              </a>
-            </li>
           </ul>
+          <div className="mt-6 flex gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                onOpenPalette();
+              }}
+              className="flex-1 rounded-full border border-border py-3 text-sm font-medium text-muted"
+            >
+              Quick search
+            </button>
+            <a
+              href={profile.resumeUrl}
+              download
+              className="flex-1 rounded-full bg-accent py-3 text-center text-sm font-semibold text-[#17110c]"
+            >
+              Résumé
+            </a>
+          </div>
         </div>
       )}
     </header>

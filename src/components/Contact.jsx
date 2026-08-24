@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { profile } from "../data/portfolio";
-import Reveal from "./Reveal";
+import useGsapReveal from "../hooks/useGsapReveal";
+import Magnetic from "./Magnetic";
 import SectionHeading from "./SectionHeading";
 
 const initialForm = { name: "", email: "", message: "" };
@@ -11,7 +12,11 @@ const socials = [
   { label: "LinkedIn", href: profile.linkedin, value: "linkedin.com/in/hiral-vavadiya" },
 ];
 
+const fieldClass =
+  "w-full border-b border-border bg-transparent px-0 py-3.5 text-[15px] text-text outline-none transition-colors placeholder:text-faint focus:border-accent";
+
 export default function Contact() {
+  const ref = useGsapReveal();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");
@@ -20,9 +25,7 @@ export default function Contact() {
     const next = {};
     if (!form.name.trim()) next.name = "Please enter your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = "Please enter a valid email.";
-    if (!form.message.trim() || form.message.trim().length < 10) {
-      next.message = "Message should be at least 10 characters.";
-    }
+    if (form.message.trim().length < 10) next.message = "Message should be at least 10 characters.";
     return next;
   };
 
@@ -47,46 +50,45 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="px-5 py-24 sm:px-8">
-      <div className="mx-auto max-w-6xl">
+    <section id="contact" ref={ref} className="px-5 py-28 sm:px-8 sm:py-36">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading
+          index="06"
           eyebrow="Contact"
-          title="Let's build something together"
-          description="Have a role, project, or just want to say hi? My inbox is open."
+          title="Let's build something"
+          description="Have a role, a project, or a problem worth solving? My inbox is open."
         />
 
-        <div className="grid gap-10 md:grid-cols-5">
-          <Reveal delay={100} className="md:col-span-2">
-            <ul className="space-y-4">
+        <div className="grid gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <ul className="border-t border-border">
               {socials.map((social) => (
-                <li key={social.label}>
+                <li key={social.label} data-reveal>
                   <a
                     href={social.href}
                     target={social.label === "Email" ? undefined : "_blank"}
                     rel={social.label === "Email" ? undefined : "noopener noreferrer"}
-                    className="group flex items-center justify-between rounded-2xl border border-border bg-surface px-5 py-4 transition-colors hover:border-accent/50"
+                    className="group flex items-center justify-between gap-4 border-b border-border py-5 transition-colors hover:border-accent"
                   >
                     <span>
-                      <span className="block text-xs font-semibold uppercase tracking-wide text-muted">
-                        {social.label}
-                      </span>
-                      <span className="block text-sm font-medium text-text group-hover:text-accent">
+                      <span className="label-mono block text-faint">{social.label}</span>
+                      <span className="mt-1.5 block text-[15px] text-text transition-colors group-hover:text-accent">
                         {social.value}
                       </span>
                     </span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-muted group-hover:text-accent">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H18m0 0v4.5M18 6l-8 8M6 12v6a1 1 0 0 0 1 1h6" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-1 group-hover:text-accent">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
                     </svg>
                   </a>
                 </li>
               ))}
             </ul>
-          </Reveal>
+          </div>
 
-          <Reveal delay={200} className="md:col-span-3">
-            <form onSubmit={handleSubmit} noValidate className="space-y-5">
-              <div>
-                <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-text">
+          <div className="lg:col-span-7">
+            <form onSubmit={handleSubmit} noValidate className="space-y-7">
+              <div data-reveal>
+                <label htmlFor="name" className="label-mono mb-1 block text-faint">
                   Name
                 </label>
                 <input
@@ -95,14 +97,14 @@ export default function Contact() {
                   type="text"
                   value={form.name}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className={fieldClass}
                   placeholder="Your name"
                 />
-                {errors.name && <p className="mt-1.5 text-xs text-red-400">{errors.name}</p>}
+                {errors.name && <p className="mt-2 text-xs text-accent">{errors.name}</p>}
               </div>
 
-              <div>
-                <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-text">
+              <div data-reveal>
+                <label htmlFor="email" className="label-mono mb-1 block text-faint">
                   Email
                 </label>
                 <input
@@ -111,42 +113,48 @@ export default function Contact() {
                   type="email"
                   value={form.email}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className={fieldClass}
                   placeholder="you@example.com"
                 />
-                {errors.email && <p className="mt-1.5 text-xs text-red-400">{errors.email}</p>}
+                {errors.email && <p className="mt-2 text-xs text-accent">{errors.email}</p>}
               </div>
 
-              <div>
-                <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-text">
+              <div data-reveal>
+                <label htmlFor="message" className="label-mono mb-1 block text-faint">
                   Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows={5}
+                  rows={4}
                   value={form.message}
                   onChange={handleChange}
-                  className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
-                  placeholder="Tell me a bit about the opportunity or project..."
+                  className={`${fieldClass} resize-none`}
+                  placeholder="Tell me about the role or project..."
                 />
-                {errors.message && <p className="mt-1.5 text-xs text-red-400">{errors.message}</p>}
+                {errors.message && <p className="mt-2 text-xs text-accent">{errors.message}</p>}
               </div>
 
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#05070a] transition-transform hover:scale-[1.02] hover:brightness-110"
-              >
-                Send Message
-              </button>
-
-              {status === "sent" && (
-                <p className="text-sm text-accent">
-                  Your email client should now be open with the message ready to send.
-                </p>
-              )}
+              <div data-reveal className="pt-2">
+                <Magnetic>
+                  <button
+                    type="submit"
+                    className="group inline-flex items-center gap-3 rounded-full bg-accent px-8 py-4 text-sm font-semibold text-[#17110c] transition-colors hover:bg-accent-strong"
+                  >
+                    Send message
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-4 w-4 transition-transform group-hover:translate-x-1">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
+                    </svg>
+                  </button>
+                </Magnetic>
+                {status === "sent" && (
+                  <p className="mt-4 text-sm text-accent">
+                    Your email client should now be open with the message ready to send.
+                  </p>
+                )}
+              </div>
             </form>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

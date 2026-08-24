@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -10,15 +10,19 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import CaseStudyModal from "./components/CaseStudyModal";
 import CommandPalette from "./components/CommandPalette";
+import Preloader from "./components/Preloader";
+import Cursor from "./components/Cursor";
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const finishLoading = useCallback(() => setLoading(false), []);
 
   useEffect(() => {
     const onKeyDown = (e) => {
-      const isModK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k";
-      if (isModK) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setPaletteOpen((v) => !v);
       }
@@ -27,11 +31,21 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = loading ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [loading]);
+
   return (
-    <>
+    <div className="grain">
+      {loading && <Preloader onDone={finishLoading} />}
+      <Cursor />
+
       <Navbar onOpenPalette={() => setPaletteOpen(true)} />
       <main>
-        <Hero />
+        <Hero ready={!loading} />
         <About />
         <Skills />
         <Experience />
@@ -50,6 +64,6 @@ export default function App() {
           onOpenCaseStudy={setActiveProject}
         />
       )}
-    </>
+    </div>
   );
 }

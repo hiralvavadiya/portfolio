@@ -1,29 +1,29 @@
 import { education } from "../data/portfolio";
-import Reveal from "./Reveal";
+import useGsapReveal from "../hooks/useGsapReveal";
 import SectionHeading from "./SectionHeading";
 
 export default function Education() {
-  return (
-    <section id="education" className="px-5 py-24 sm:px-8">
-      <div className="mx-auto max-w-6xl">
-        <SectionHeading eyebrow="Education" title="Background & training" />
+  const ref = useGsapReveal();
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          {education.map((item, i) => (
-            <Reveal key={item.institution} delay={i * 100}>
-              <div className="h-full rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-accent/50">
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <h3 className="font-display text-base font-semibold text-text">
-                    {item.credential}
-                  </h3>
-                  <span className="text-xs font-medium uppercase tracking-wide text-accent">
-                    {item.period}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-muted">{item.institution}</p>
-                {item.detail && <p className="mt-1 text-sm text-muted">{item.detail}</p>}
+  return (
+    <section id="education" ref={ref} className="px-5 py-28 sm:px-8 sm:py-36">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeading index="05" eyebrow="Education" title="Background & training" />
+
+        <div className="border-t border-border">
+          {education.map((item) => (
+            <div
+              key={item.institution}
+              data-reveal
+              className="grid gap-4 border-b border-border py-8 transition-colors hover:bg-surface/40 lg:grid-cols-12 lg:gap-8 lg:px-4"
+            >
+              <p className="label-mono text-accent lg:col-span-3">{item.period}</p>
+              <div className="lg:col-span-9">
+                <h3 className="text-lg font-semibold text-text">{item.credential}</h3>
+                <p className="mt-1.5 text-sm text-muted">{item.institution}</p>
+                {item.detail && <p className="mt-1 text-sm text-faint">{item.detail}</p>}
               </div>
-            </Reveal>
+            </div>
           ))}
         </div>
       </div>
