@@ -9,7 +9,7 @@ export default function Projects({ onOpenCaseStudy }) {
         <SectionHeading
           eyebrow="Projects"
           title="Things I've built"
-          description="A selection of full-stack projects covering auth, CRUD, real-time features and payments."
+          description="A selection of work covering real-time systems, full-stack CRUD, booking logic and interactive frontends."
         />
 
         <div className="grid gap-6 sm:grid-cols-2">

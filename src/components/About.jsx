@@ -3,9 +3,9 @@ import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
 const stats = [
-  { value: "2 yrs", label: "Hands-on experience" },
-  { value: "1 yr", label: "MERN internship" },
-  { value: "1 yr", label: "Professional role" },
+  { value: "2+ yrs", label: "Hands-on experience" },
+  { value: "1 yr", label: "Frontend internship" },
+  { value: "1 yr 2 mos", label: "Full Stack role" },
 ];
 
 export default function About() {

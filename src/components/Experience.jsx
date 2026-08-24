@@ -9,7 +9,7 @@ export default function Experience() {
         <SectionHeading
           eyebrow="Experience"
           title="Where I've worked"
-          description="2 years of combined internship and professional experience across the full stack."
+          description="2+ years across frontend and full-stack roles, building real-time platforms and client software."
         />
 
         <div className="relative">

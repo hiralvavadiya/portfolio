@@ -1,65 +1,78 @@
-// Central place to edit your info. Replace placeholder metrics/links with your real ones.
+// Central place to edit your info — the whole site reads from this file.
 
 export const profile = {
   name: "Hiral Vavadiya",
-  title: "Full Stack MERN Developer",
+  title: "Full Stack Developer",
   tagline: "I build scalable web apps with clean UIs and solid backend architecture.",
   location: "Surat, Gujarat, India",
   email: "thisishiralvavadiya@gmail.com",
+  phone: "+91 9106833379",
   github: "https://github.com/hiralvavadiya",
   linkedin: "https://www.linkedin.com/in/hiral-vavadiya/",
   resumeUrl: "/Hiral_Vavadiya_Resume.pdf",
+  openToWork: true,
 };
 
 export const about = {
   paragraph:
-    "I'm a Full Stack Developer with 2 years of hands-on experience across the MERN stack — 1 year as an intern and 1 year in a professional role. I enjoy turning ambiguous requirements into clean, working software, whether that's a REST API, an authentication flow, or a polished React UI. I care about readable code, sensible architecture, and shipping features that hold up in production, and I'm always looking for the next problem worth solving.",
+    "I'm a Full Stack Developer with just over 2 years of hands-on experience — a year building frontends at Serialcom Infotech, then a year and change owning features end-to-end at Theta Solutions. I've shipped real-time systems with WebSockets, REST APIs on Node and Express, and React interfaces that people actually use every day. I like problems where the domain logic is the hard part, not just the wiring, and I care about writing code that still makes sense six months later.",
 };
 
 export const skills = [
   {
     category: "Frontend",
-    items: ["React", "Redux", "Tailwind CSS", "HTML5", "CSS3", "JavaScript (ES6+)"],
+    items: [
+      "React.js",
+      "Next.js",
+      "Redux",
+      "JavaScript (ES6+)",
+      "TypeScript",
+      "Tailwind CSS",
+      "Material-UI",
+      "Bootstrap",
+      "HTML5",
+      "CSS3",
+    ],
   },
   {
     category: "Backend",
-    items: ["Node.js", "Express.js", "REST APIs", "JWT Authentication"],
+    items: ["Node.js", "Express.js", "REST APIs", "WebSockets", "Socket.io"],
   },
   {
     category: "Database",
-    items: ["MongoDB", "Mongoose"],
+    items: ["MongoDB", "Mongoose", "MySQL"],
   },
   {
     category: "Tools & Workflow",
-    items: ["Git", "GitHub", "Postman", "VS Code", "Vercel", "Render", "Notion", "Linear", "Jira", "Jibble"],
+    items: ["Git", "GitHub", "VS Code", "Postman", "Notion", "Linear", "Jira", "Jibble"],
   },
   {
-    category: "Also Exploring",
-    items: ["TypeScript", "Next.js", "Docker"],
+    category: "Also Worked With",
+    items: ["Python", "C++", "C#", "GSAP", "Spline / 3D", "OOP", "Data Science"],
   },
 ];
 
 export const experience = [
   {
-    company: "Company Name Pvt. Ltd.",
+    company: "Theta Solutions",
     role: "Full Stack Developer",
-    duration: "1 yr · Full-time",
-    period: "2025 — Present",
+    duration: "1 yr 2 mos · Full-time · On-site",
+    period: "Jun 2025 — Jul 2026",
     bullets: [
-      "Optimized key REST API endpoints (query indexing + response payload trimming), cutting average response time by ~40%.",
-      "Designed and shipped a customer-facing feature end-to-end (React + Node/Express + MongoDB), adopted by the majority of active users within the first month.",
-      "Implemented JWT-based authentication and role-based access control, replacing a legacy session system and reducing auth-related support tickets.",
+      "Owned features end-to-end across the stack — REST APIs on Node.js and Express, backed by MongoDB, through to the React interfaces built on top of them.",
+      "Worked on custom software delivered to external clients, translating requirements into working features rather than picking up pre-specified tickets.",
+      "Collaborated in a small team using Git workflows, code review, and Linear/Jira for tracking.",
     ],
   },
   {
-    company: "Company Name (Internship)",
-    role: "MERN Stack Intern",
-    duration: "1 yr · Internship",
-    period: "2024 — 2025",
+    company: "Serialcom Infotech",
+    role: "Frontend Developer — Internship",
+    duration: "1 yr · Internship · On-site",
+    period: "May 2024 — Apr 2025",
     bullets: [
-      "Built and shipped CRUD modules end-to-end using React, Express and MongoDB under senior developer guidance.",
-      "Learned to write and consume REST APIs, handle async data flows, and structure a full-stack app for maintainability.",
-      "Contributed bug fixes and small features to a production codebase, working with Git workflows and code review.",
+      "Built SmartScorer.com, a live cricket scoring platform — real-time scoring and match management over WebSockets, with responsive UIs for live scoring, auctions, profiles and admin match control.",
+      "Implemented role-based login and dynamic content updates across the platform, using Next.js, React and MUI.",
+      "Built IDO PDF, a PDF editor and converter supporting images (JPG/PNG/TIFF), text and Word documents to PDF and back — focused on cross-browser compatibility and performance.",
     ],
   },
 ];
@@ -105,33 +118,58 @@ export const projects = [
       whatsLeft: [
         "No auth/authorization layer yet — it's a single-tenant admin tool for now, not multi-user.",
         "No automated tests yet for the booking/inventory/payment/availability modules — typechecking and manual verification only so far.",
-        "Not deployed yet — this is a local-first build; see the repo for setup instructions.",
+        "Not deployed yet — this is a local-first build.",
       ],
     },
   },
   {
-    name: "TaskFlow — Team Task Manager",
+    name: "Student Application Portal",
     description:
-      "A full-stack task management app with authentication, role-based boards, and real-time status updates for teams.",
-    tech: ["React", "Redux", "Node.js", "Express", "MongoDB", "JWT", "Socket.io"],
-    demo: "https://taskflow-demo.vercel.app",
-    github: "https://github.com/hiralvavadiya/taskflow",
+      "A full-stack admissions portal with application form submission, document upload, and a dashboard that updates in real time as new applications arrive.",
+    tech: ["React", "Tailwind CSS", "Node.js", "Express", "MongoDB", "REST API"],
+    demo: null,
+    github: "https://github.com/hiralvavadiya/student-application-portal",
   },
   {
-    name: "ShopCart — E-commerce Platform",
+    name: "Device Tracker — Live Location",
     description:
-      "A full-stack storefront with product catalog, cart, checkout and payment integration, plus an admin panel for order management.",
-    tech: ["React", "Node.js", "Express", "MongoDB", "Stripe", "JWT"],
-    demo: "https://shopcart-demo.vercel.app",
-    github: "https://github.com/hiralvavadiya/shopcart",
+      "Real-time device tracking with live location updates and dynamic map markers, pushed over Socket.io rather than polled.",
+    tech: ["Node.js", "Express", "Socket.io", "REST API"],
+    demo: null,
+    github: "https://github.com/hiralvavadiya/device-tracker",
   },
   {
-    name: "DevBlog — Full Stack Blogging Platform",
+    name: "3D Solar System",
     description:
-      "A blogging platform with JWT auth, rich-text post editing, comments, and a REST API deployed independently from the client.",
-    tech: ["React", "Node.js", "Express", "MongoDB", "JWT", "Render"],
-    demo: "https://devblog-demo.vercel.app",
-    github: "https://github.com/hiralvavadiya/devblog",
+      "An interactive 3D solar system built for the NASA Space Apps Challenge — winner of the Best Use of Science award.",
+    tech: ["TypeScript", "Spline", "3D Models", "Git"],
+    demo: null,
+    github: null,
+    note: "NASA Space Apps Challenge · Best Use of Science Award",
+    status: "Award winner",
+  },
+  {
+    name: "Significo Clone — Healthcare Website",
+    description:
+      "A polished healthcare marketing site with GSAP animations and Locomotive Scroll, built to practise motion design and smooth-scroll interaction.",
+    tech: ["HTML", "Tailwind CSS", "JavaScript", "GSAP", "Locomotive Scroll"],
+    demo: null,
+    github: "https://github.com/hiralvavadiya/significo-clone",
+  },
+];
+
+export const education = [
+  {
+    institution: "Shree Ram Krishna Institute of Computer Education and Applied Science",
+    credential: "Bachelor of Science — Computer Science",
+    detail: "Surat, Gujarat · SGPA 8.40",
+    period: "Jul 2022 — Jul 2025",
+  },
+  {
+    institution: "Creative Digital Multimedia Institute",
+    credential: "Full-Stack Developer (MERN) — Certification",
+    detail: "Hands-on MERN stack training",
+    period: "Mar 2023 — Mar 2024",
   },
 ];
 
@@ -141,5 +179,6 @@ export const nav = [
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
