@@ -48,7 +48,7 @@ export const skills = [
   },
   {
     category: "Also Worked With",
-    items: ["Python", "C++", "C#", "GSAP", "Spline / 3D", "OOP", "Data Science"],
+    items: ["C++", "C#", "GSAP", "Spline / 3D", "OOP"],
   },
 ];
 
