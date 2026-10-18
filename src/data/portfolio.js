@@ -46,10 +46,6 @@ export const skills = [
     category: "Tools & Workflow",
     items: ["Git", "GitHub", "VS Code", "Postman", "Notion", "Linear", "Jira", "Jibble"],
   },
-  {
-    category: "Also Worked With",
-    items: ["C++", "C#", "GSAP", "Spline / 3D", "OOP"],
-  },
 ];
 
 export const experience = [
