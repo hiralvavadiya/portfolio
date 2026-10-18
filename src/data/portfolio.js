@@ -9,7 +9,7 @@ export const profile = {
   phone: "+91 9106833379",
   github: "https://github.com/hiralvavadiya",
   linkedin: "https://www.linkedin.com/in/hiral-vavadiya/",
-  resumeUrl: "/Hiral_Vavadiya_Resume.pdf",
+  resumeUrl: `${import.meta.env.BASE_URL}Hiral_Vavadiya_Resume.pdf`,
   openToWork: true,
 };
 
