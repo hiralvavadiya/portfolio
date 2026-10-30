@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+
+const INTERACTIVE = "a, button, input, textarea, [role='button']";
 
 /**
  * Trailing dot + ring cursor that expands over interactive elements.
@@ -20,35 +21,50 @@ export default function Cursor() {
 
     const dot = dotRef.current;
     const ring = ringRef.current;
+    const target = { x: -100, y: -100 };
+    const dotPos = { ...target };
+    const ringPos = { ...target };
+    let hovering = false;
+    let scale = 1;
+    let frame = 0;
 
-    const moveDot = gsap.quickTo(dot, "x", { duration: 0.12, ease: "power3.out" });
-    const moveDotY = gsap.quickTo(dot, "y", { duration: 0.12, ease: "power3.out" });
-    const moveRing = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3.out" });
-    const moveRingY = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3.out" });
+    // Lerp both toward the pointer; stop the loop once they've settled.
+    const tick = () => {
+      dotPos.x += (target.x - dotPos.x) * 0.6;
+      dotPos.y += (target.y - dotPos.y) * 0.6;
+      ringPos.x += (target.x - ringPos.x) * 0.18;
+      ringPos.y += (target.y - ringPos.y) * 0.18;
+      scale += ((hovering ? 1.9 : 1) - scale) * 0.2;
+      dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`;
+      ring.style.transform = `translate3d(${ringPos.x}px, ${ringPos.y}px, 0) translate(-50%, -50%) scale(${scale})`;
+
+      const settled =
+        Math.abs(target.x - ringPos.x) < 0.1 &&
+        Math.abs(target.y - ringPos.y) < 0.1 &&
+        Math.abs((hovering ? 1.9 : 1) - scale) < 0.01;
+      frame = settled ? 0 : requestAnimationFrame(tick);
+    };
 
     const onMove = (e) => {
-      moveDot(e.clientX);
-      moveDotY(e.clientY);
-      moveRing(e.clientX);
-      moveRingY(e.clientY);
+      target.x = e.clientX;
+      target.y = e.clientY;
+      if (!frame) frame = requestAnimationFrame(tick);
     };
 
-    const interactive = "a, button, input, textarea, [role='button']";
-    const onOver = (e) => {
-      if (e.target.closest?.(interactive)) {
-        gsap.to(ring, { scale: 1.9, opacity: 0.9, duration: 0.3, ease: "power3.out" });
-      }
+    const setHover = (value) => {
+      hovering = value;
+      ring.style.opacity = value ? "0.9" : "0.45";
+      if (!frame) frame = requestAnimationFrame(tick);
     };
-    const onOut = (e) => {
-      if (e.target.closest?.(interactive)) {
-        gsap.to(ring, { scale: 1, opacity: 0.45, duration: 0.3, ease: "power3.out" });
-      }
-    };
+    const onOver = (e) => e.target.closest?.(INTERACTIVE) && setHover(true);
+    const onOut = (e) => e.target.closest?.(INTERACTIVE) && setHover(false);
 
-    window.addEventListener("mousemove", onMove);
+    tick(); // park both off-screen until the first mouse move
+    window.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseover", onOver);
     document.addEventListener("mouseout", onOut);
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
@@ -62,13 +78,13 @@ export default function Cursor() {
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[200] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent"
+        className="pointer-events-none fixed left-0 top-0 z-[200] h-1.5 w-1.5 rounded-full bg-accent"
       />
       <div
         ref={ringRef}
         aria-hidden="true"
-        style={{ opacity: 0.45 }}
-        className="pointer-events-none fixed left-0 top-0 z-[200] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent"
+        style={{ opacity: 0.45, transition: "opacity 0.3s ease" }}
+        className="pointer-events-none fixed left-0 top-0 z-[200] h-8 w-8 rounded-full border border-accent"
       />
     </>
   );

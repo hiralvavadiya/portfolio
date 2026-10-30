@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -8,17 +8,15 @@ import Projects from "./components/Projects";
 import Education from "./components/Education";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import CaseStudyModal from "./components/CaseStudyModal";
-import CommandPalette from "./components/CommandPalette";
-import Preloader from "./components/Preloader";
 import Cursor from "./components/Cursor";
+
+// Only needed after an interaction, so keep them out of the initial bundle.
+const CaseStudyModal = lazy(() => import("./components/CaseStudyModal"));
+const CommandPalette = lazy(() => import("./components/CommandPalette"));
 
 export default function App() {
   const [activeProject, setActiveProject] = useState(null);
   const [paletteOpen, setPaletteOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const finishLoading = useCallback(() => setLoading(false), []);
 
   useEffect(() => {
     const onKeyDown = (e) => {
@@ -31,21 +29,13 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = loading ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [loading]);
-
   return (
     <div className="grain">
-      {loading && <Preloader onDone={finishLoading} />}
       <Cursor />
 
       <Navbar onOpenPalette={() => setPaletteOpen(true)} />
       <main>
-        <Hero ready={!loading} />
+        <Hero />
         <About />
         <Skills />
         <Experience />
@@ -55,15 +45,17 @@ export default function App() {
       </main>
       <Footer />
 
-      {activeProject && (
-        <CaseStudyModal project={activeProject} onClose={() => setActiveProject(null)} />
-      )}
-      {paletteOpen && (
-        <CommandPalette
-          onClose={() => setPaletteOpen(false)}
-          onOpenCaseStudy={setActiveProject}
-        />
-      )}
+      <Suspense fallback={null}>
+        {activeProject && (
+          <CaseStudyModal project={activeProject} onClose={() => setActiveProject(null)} />
+        )}
+        {paletteOpen && (
+          <CommandPalette
+            onClose={() => setPaletteOpen(false)}
+            onOpenCaseStudy={setActiveProject}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

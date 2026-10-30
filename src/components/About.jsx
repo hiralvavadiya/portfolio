@@ -1,5 +1,5 @@
 import { about } from "../data/portfolio";
-import useGsapReveal from "../hooks/useGsapReveal";
+import useReveal from "../hooks/useReveal";
 import CountUp from "./CountUp";
 import SectionHeading from "./SectionHeading";
 
@@ -10,7 +10,7 @@ const stats = [
 ];
 
 export default function About() {
-  const ref = useGsapReveal();
+  const ref = useReveal();
 
   return (
     <section id="about" ref={ref} className="relative px-5 py-28 sm:px-8 sm:py-36">

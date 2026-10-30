@@ -1,9 +1,9 @@
 import { experience } from "../data/portfolio";
-import useGsapReveal from "../hooks/useGsapReveal";
+import useReveal from "../hooks/useReveal";
 import SectionHeading from "./SectionHeading";
 
 export default function Experience() {
-  const ref = useGsapReveal({ stagger: 0.12 });
+  const ref = useReveal();
 
   return (
     <section id="experience" ref={ref} className="px-5 py-28 sm:px-8 sm:py-36">

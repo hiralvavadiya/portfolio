@@ -1,33 +1,8 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import { profile } from "../data/portfolio";
 import LiveClock from "./LiveClock";
 import Magnetic from "./Magnetic";
 
-export default function Hero({ ready }) {
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    if (!ready) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const targets = rootRef.current?.querySelectorAll("[data-hero]");
-    if (!targets?.length) return;
-
-    if (reduced) {
-      gsap.set(targets, { opacity: 1, y: 0 });
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        targets,
-        { opacity: 0, y: 46 },
-        { opacity: 1, y: 0, duration: 1.1, ease: "power4.out", stagger: 0.09, delay: 0.15 }
-      );
-    }, rootRef);
-    return () => ctx.revert();
-  }, [ready]);
-
+export default function Hero() {
   const scrollTo = (e, sel) => {
     e.preventDefault();
     document.querySelector(sel)?.scrollIntoView({ behavior: "smooth" });
@@ -36,39 +11,39 @@ export default function Hero({ ready }) {
   return (
     <section
       id="home"
-      ref={rootRef}
       className="relative flex min-h-screen items-center overflow-hidden px-5 pt-28 pb-16 sm:px-8"
     >
       {/* gradient mesh */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-0 h-[38rem] w-[38rem] rounded-full bg-accent/12 blur-[120px]"
+        className="glow-blob pointer-events-none absolute -left-60 -top-40 h-[56rem] w-[56rem]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 bottom-0 h-[30rem] w-[30rem] rounded-full bg-accent-deep/10 blur-[120px]"
+        className="glow-blob-deep pointer-events-none absolute -right-48 -bottom-32 h-[46rem] w-[46rem]"
       />
 
       <div className="relative mx-auto w-full max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           {/* Left — the statement */}
           <div className="lg:col-span-8">
-            <p data-hero className="label-mono mb-8 flex items-center gap-3 text-accent">
+            <p data-hero style={{ "--i": 0 }} className="label-mono mb-8 flex items-center gap-3 text-accent">
               <span className="inline-block h-px w-10 bg-accent" />
               Full Stack Developer
             </p>
 
             <h1 className="display-xl text-text">
-              <span data-hero className="block text-[clamp(3.2rem,13vw,10rem)]">
+              <span data-hero style={{ "--i": 1 }} className="block text-[clamp(3.2rem,13vw,10rem)]">
                 HIRAL
               </span>
-              <span data-hero className="block text-[clamp(3.2rem,13vw,10rem)] text-gradient">
+              <span data-hero style={{ "--i": 2 }} className="block text-[clamp(3.2rem,13vw,10rem)] text-gradient">
                 VAVADIYA
               </span>
             </h1>
 
             <p
               data-hero
+              style={{ "--i": 3 }}
               className="mt-10 max-w-xl text-lg leading-relaxed text-muted sm:text-xl"
             >
               I build <span className="text-text">real-time, full-stack systems</span> — live
@@ -76,7 +51,7 @@ export default function Hero({ ready }) {
               underneath them.
             </p>
 
-            <div data-hero className="mt-12 flex flex-wrap items-center gap-4">
+            <div data-hero style={{ "--i": 4 }} className="mt-12 flex flex-wrap items-center gap-4">
               <Magnetic>
                 <a
                   href="#projects"
@@ -105,7 +80,7 @@ export default function Hero({ ready }) {
           </div>
 
           {/* Right — live metadata rail */}
-          <aside data-hero className="lg:col-span-4 lg:pt-4">
+          <aside data-hero style={{ "--i": 5 }} className="lg:col-span-4 lg:pt-4">
             <dl className="space-y-6 border-t border-border pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
               <div>
                 <dt className="label-mono text-faint">Local time</dt>

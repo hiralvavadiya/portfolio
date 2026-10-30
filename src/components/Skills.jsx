@@ -1,5 +1,5 @@
 import { skills } from "../data/portfolio";
-import useGsapReveal from "../hooks/useGsapReveal";
+import useReveal from "../hooks/useReveal";
 import SectionHeading from "./SectionHeading";
 
 const marqueeItems = [
@@ -8,7 +8,7 @@ const marqueeItems = [
 ];
 
 export default function Skills() {
-  const ref = useGsapReveal();
+  const ref = useReveal();
 
   return (
     <section id="skills" className="relative py-28 sm:py-36">

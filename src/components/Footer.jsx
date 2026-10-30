@@ -19,12 +19,12 @@ export default function Footer() {
               Hiral<span className="text-accent">.</span>
             </a>
             <p className="label-mono mt-4 text-faint">
-              © {new Date().getFullYear()} · Built with React, Tailwind &amp; GSAP
+              © {new Date().getFullYear()} · Built with React &amp; Tailwind
             </p>
           </div>
 
           <div className="flex items-center gap-7 text-sm">
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" className="text-muted hover:text-accent">
               GitHub
             </a>
             <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-accent">

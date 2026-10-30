@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { profile } from "../data/portfolio";
-import useGsapReveal from "../hooks/useGsapReveal";
+import useReveal from "../hooks/useReveal";
 import Magnetic from "./Magnetic";
 import SectionHeading from "./SectionHeading";
 
@@ -16,7 +16,7 @@ const fieldClass =
   "w-full border-b border-border bg-transparent px-0 py-3.5 text-[15px] text-text outline-none transition-colors placeholder:text-faint focus:border-accent";
 
 export default function Contact() {
-  const ref = useGsapReveal();
+  const ref = useReveal();
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle");

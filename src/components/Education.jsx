@@ -1,9 +1,9 @@
 import { education } from "../data/portfolio";
-import useGsapReveal from "../hooks/useGsapReveal";
+import useReveal from "../hooks/useReveal";
 import SectionHeading from "./SectionHeading";
 
 export default function Education() {
-  const ref = useGsapReveal();
+  const ref = useReveal();
 
   return (
     <section id="education" ref={ref} className="px-5 py-28 sm:px-8 sm:py-36">

@@ -1,5 +1,5 @@
 import { projects } from "../data/portfolio";
-import useGsapReveal from "../hooks/useGsapReveal";
+import useReveal from "../hooks/useReveal";
 import BookingPlayground from "./BookingPlayground";
 import SectionHeading from "./SectionHeading";
 
@@ -36,6 +36,7 @@ function LinkRow({ project, onOpenCaseStudy }) {
           href={project.github}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label={`View ${project.name} source code on GitHub`}
           className="inline-flex items-center gap-2 text-muted hover:text-text"
         >
           GitHub
@@ -51,7 +52,7 @@ function LinkRow({ project, onOpenCaseStudy }) {
 }
 
 export default function Projects({ onOpenCaseStudy }) {
-  const ref = useGsapReveal({ stagger: 0.1 });
+  const ref = useReveal();
   const [featured, ...rest] = projects;
 
   return (
@@ -71,7 +72,7 @@ export default function Projects({ onOpenCaseStudy }) {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-[90px] transition-opacity duration-500 group-hover:opacity-160"
+            className="glow-blob pointer-events-none absolute -right-40 -top-40 h-[28rem] w-[28rem]"
           />
           <div className="relative grid gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
